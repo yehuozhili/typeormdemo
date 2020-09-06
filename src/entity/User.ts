@@ -4,8 +4,12 @@ import {
 	Column,
 	CreateDateColumn,
 	UpdateDateColumn,
+	OneToOne,
+	JoinColumn,
+	OneToMany,
 } from "typeorm";
-
+import { UserExtend } from "./UserExtend";
+import { Posts } from "./Posts";
 console.log("f");
 
 @Entity({ name: "user" })
@@ -58,4 +62,9 @@ export class User {
 		comment: "更新时间",
 	})
 	updateAt: Date;
+	@OneToOne(() => UserExtend, (userExtend) => userExtend.user)
+	@JoinColumn()
+	userDetail: UserExtend;
+	@OneToMany(() => Posts, (post) => post.user)
+	posts: Posts[];
 }
